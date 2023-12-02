@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot test for UserInfo.jsx should render correctly 1`] = `
+<div
+  className="d-flex align-items-center gap-2"
+>
+  <img
+    alt="avatar"
+    className="rounded-pill"
+    height={40}
+    src="https://i.pravatar.cc/150?img=1"
+    width={40}
+  />
+  <span>
+    Peter
+  </span>
+</div>
+`;

@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot test for UserInfo.jsx should render selected AnswerResultCard correctly 1`] = `
+<div
+  className="d-flex flex-column align-items-center gap-2 shadow px-3 py-4 rounded-2 text-success border border-success"
+>
+  <p
+    className="h5"
+  >
+    Study React
+  </p>
+  <p
+    className="mb-0"
+  >
+    <strong>
+      Amount of votes:
+    </strong>
+     
+    2
+  </p>
+  <p
+    className="mb-0"
+  >
+    <strong>
+       Percentage:
+    </strong>
+     
+    50.0
+    %
+  </p>
+</div>
+`;
+
+exports[`Snapshot test for UserInfo.jsx should render unselected AnswerResultCard correctly 1`] = `
+<div
+  className="d-flex flex-column align-items-center gap-2 shadow px-3 py-4 rounded-2 text-muted"
+>
+  <p
+    className="h5"
+  >
+    Study React
+  </p>
+  <p
+    className="mb-0"
+  >
+    <strong>
+      Amount of votes:
+    </strong>
+     
+    2
+  </p>
+  <p
+    className="mb-0"
+  >
+    <strong>
+       Percentage:
+    </strong>
+     
+    50.0
+    %
+  </p>
+</div>
+`;
