@@ -4,6 +4,7 @@ import {
   createSelector,
 } from "@reduxjs/toolkit";
 import { _getUsers } from "../services/mockService";
+import { saveQuestion } from "./questionSlice";
 
 export const getUserList = createAsyncThunk("user/getUserList", async () => {
   return await _getUsers();
@@ -28,6 +29,10 @@ export const userSlice = createSlice({
       .addCase(getUserList.rejected, (state) => {
         state.usersMap = null;
         state.isLoading = false;
+      })
+      .addCase(saveQuestion.fulfilled, (state, action) => {
+        const newQuestion = action.payload;
+        state.usersMap[newQuestion.author].questions.push(newQuestion.id);
       });
   },
 });

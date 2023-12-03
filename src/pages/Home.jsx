@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getQuestionList,
@@ -6,13 +6,20 @@ import {
   selectQuestionList,
   selectUnAnsweredQuestionList,
 } from "../redux/questionSlice";
-import QuestionList from "../components/QuestionList";
+import QuestionCard from "../components/QuestionCard";
+
+const TABS = {
+  UNANSWERED: "unanswered",
+  ANSWERED: "answered",
+};
 
 function Home() {
   const { isLoading } = useSelector((state) => state.question);
   const questionList = useSelector(selectQuestionList);
-  const newdQuestions = useSelector(selectUnAnsweredQuestionList);
+  const newQuestions = useSelector(selectUnAnsweredQuestionList);
   const answeredQuestions = useSelector(selectAnsweredQuestionList);
+
+  const [activeTab, setActiveTab] = useState(TABS.UNANSWERED);
 
   const dispatch = useDispatch();
 
@@ -21,6 +28,52 @@ function Home() {
       dispatch(getQuestionList());
     }
   }, [dispatch, questionList.length]);
+
+  const renderPollsSection = () => {
+    const listItems =
+      activeTab === TABS.UNANSWERED ? newQuestions : answeredQuestions;
+
+    return (
+      <div className="mt-4">
+        <ul className="nav nav-tabs">
+          <li className="nav-item">
+            <button
+              className={`nav-link ${
+                activeTab === TABS.UNANSWERED ? "active" : ""
+              }`}
+              onClick={() => setActiveTab(TABS.UNANSWERED)}
+            >
+              Unanswered polls ({newQuestions.length})
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${
+                activeTab === TABS.ANSWERED ? "active" : ""
+              }`}
+              onClick={() => setActiveTab(TABS.ANSWERED)}
+            >
+              Answered polls ({answeredQuestions.length})
+            </button>
+          </li>
+        </ul>
+        <div className="d-flex flex-wrap justify-content-center gap-4 mt-4">
+          {listItems.length > 0 ? (
+            listItems.map((question) => (
+              <QuestionCard
+                key={question.id}
+                id={question.id}
+                author={question.author}
+                timestamp={question.timestamp}
+              />
+            ))
+          ) : (
+            <p className="h5">There are no {activeTab} polls</p>
+          )}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <main className="container">
@@ -31,15 +84,7 @@ function Home() {
           </div>
         </div>
       ) : (
-        <>
-          {newdQuestions.length > 0 && (
-            <QuestionList title="New Questions" items={newdQuestions} />
-          )}
-          {newdQuestions.length > 0 && answeredQuestions.length > 0 && <hr />}
-          {answeredQuestions.length > 0 && (
-            <QuestionList title="Done" items={answeredQuestions} />
-          )}
-        </>
+        renderPollsSection()
       )}
     </main>
   );

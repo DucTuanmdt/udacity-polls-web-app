@@ -180,6 +180,16 @@ export function _saveQuestion(question) {
         [formattedQuestion.id]: formattedQuestion,
       };
 
+      const author = {
+        ...users[question.author],
+        questions: [...users[question.author].questions, formattedQuestion.id],
+      };
+
+      users = {
+        ...users,
+        [question.author]: author,
+      };
+
       resolve(formattedQuestion);
     }, 1000);
   });
